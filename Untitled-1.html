@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Vertical</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .title {
+            font-size: 27px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #d35400; /* Laranja escuro */
+        }
+
+        .sidebar .search {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .search input {
+            width: 70%;
+            padding: 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .sidebar button {
+            width: 100%;
+            background: none;
+            border: none;
+            color: white;
+            text-align: left;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .sidebar button:hover {
+            background-color: #34495e;
+        }
+
+        .large-button {
+            width: calc(100% - 40px);
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #d35400;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .large-button:hover {
+            background-color: #e67e22;
+        }
+
+        .submenu {
+            padding-left: 20px;
+        }
+
+        .submenu button {
+            width: calc(100% - 20px);
+            margin: 5px 0;
+            text-align: left;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-container form {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 10px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #f4f4f4;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container form input, 
+        .form-container form textarea,
+        .form-container form select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .form-container form textarea {
+            resize: vertical;
+        }
+
+        .form-container form .buttons {
+            grid-column: 1 / -1;
+            text-align: right;
+        }
+
+        .form-container form button {
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .form-container form button:hover {
+            background-color: #34495e;
+        }
+
+        /* Título do formulário */
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function toggleSubMenu(menuId) {
+            const submenu = document.getElementById(menuId);
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function showForm(formId) {
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => form.classList.remove('active'));
+            document.getElementById(formId).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="title">EXPERT TRUCK</div>
+        <div class="search">
+            <input type="text" placeholder="Pesquisar...">
+        </div>
+        <button class="large-button" onclick="showForm('osRotasForm')">O.S ROTAS</button>
+        <button onclick="toggleSubMenu('cadastroMenu')">Cadastro</button>
+        <div id="cadastroMenu" class="submenu">
+            <button onclick="showForm('clienteForm')">Cliente</button>
+            <button>Usuario</button>
+            <button>Motorista</button>
+            <button>Peças</button>
+            <button>Fornecedor</button>
+            <button>Veículo</button>
+        </div>
+
+        <button onclick="toggleSubMenu('relatorioMenu')">Relatório</button>
+        <div id="relatorioMenu" class="submenu">
+            <button>Relatório 1</button>
+            <button>Relatório 2</button>
+        </div>
+        <button onclick="toggleSubMenu('financeiroMenu')">Financeiro</button>
+        <div id="financeiroMenu" class="submenu">
+            <button>Prestação de Contas</button>
+            <button>Despesas</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Bem-vindo!</h1>
+        <p>Selecione uma opção no menu à esquerda.</p>
+
+        <div id="osRotasForm" class="form-container">
+            <div class="form-title">ORDEM DE SERVIÇO - ROTAS</div>
+            <form>
+                <div style="grid-column: 1 / -1; font-weight: bold;">Origem</div>
+                <label for="ufCarregamento">UF:</label>
+                <input type="text" id="ufCarregamento" name="ufCarregamento">
+
+                <label for="cidadeCarregamento">Cidade:</label>
+                <input type="text" id="cidadeCarregamento" name="cidadeCarregamento">
+
+                <div style="grid-column: 1 / -1; font-weight: bold;">Percurso</div>
+                <label for="ufPercurso">UF:</label>
+                <input type="text" id="ufPercurso" name="ufPercurso">
+
+                <label for="cidadePercurso">Cidade:</label>
+                <input type="text" id="cidadePercurso" name="cidadePercurso">
+
+                <div style="grid-column: 1 / -1; font-weight: bold;"> Destino</div>
+                <label for="ufDescarregamento">UF:</label>
+                <input type="text" id="ufDescarregamento" name="ufDescarregamento">
+
+                <label for="cidadeDescarregamento">Cidade:</label>
+                <input type="text" id="cidadeDescarregamento" name="cidadeDescarregamento">
+
+                <label for="veiculo">Veículo:</label>
+                <input type="text" id="veiculo" name="veiculo">
+
+                <label for="motorista">Motorista:</label>
+                <input type="text" id="motorista" name="motorista">
+
+                <label for="kmInicial">KM Inicial:</label>
+                <input type="number" id="kmInicial" name="kmInicial">
+
+                <label for="kmFinal">KM Final:</label>
+                <input type="number" id="kmFinal" name="kmFinal">
+
+                <label for="dataSaida">Data de Saída:</label>
+                <input type="date" id="dataSaida" name="dataSaida">
+
+                <label for="dataChegada">Data de Chegada:</label>
+                <input type="date" id="dataChegada" name="dataChegada">
+
+                <label for="valorFrete">Valor do Frete:</label>
+                <input type="number" id="valorFrete" name="valorFrete" step="0.01">
+
+                <label for="valorAdiantamento">Valor de Adiantamento:</label>
+                <input type="number" id="valorAdiantamento" name="valorAdiantamento" step="0.01">
+
+                <label for="valorDespesas">Valor de Despesas:</label>
+                <input type="number" id="valorDespesas" name="valorDespesas" step="0.01">
+
+                <label for="observacao">Observação:</label>
+                <textarea id="observacao" name="observacao" rows="4"></textarea>
+
+                <label for="anexo">Anexo de Documento:</label>
+                <input type="file" id="anexo" name="anexo">
+
+                <div class="buttons">
+                    <button type="submit">Salvar</button>
+                    <button type="button">Alterar</button>
+                    <button type="button">Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
